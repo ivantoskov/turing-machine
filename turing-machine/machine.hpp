@@ -2,7 +2,7 @@
 //  machine.hpp
 //  turing-machine
 //
-//  Created by Ivan Toskov on 09/12/2020.
+//  Created by Ivan Toskov on 20/12/2020.
 //
 
 #ifndef machine_hpp
@@ -11,23 +11,28 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include <vector>
+#include "tape.hpp"
+#include "transition.hpp"
 
-class Tape {
+class TuringMachine {
+    
 private:
-    char current;
-    std::vector<char> left;
-    std::vector<char> right;
+    std::string currentState;
+    Tape* tape;
+    std::vector<Transition> transitions;
+    
 public:
-    Tape(const std::string&);
-    Tape(const Tape&);
-        
-    char read() const;
-    void write(char);
-    void moveLeft();
-    void moveRight();
-    friend std::ostream& operator<<(std::ostream&, Tape&);    
+    TuringMachine();
+    TuringMachine(const TuringMachine&);
+    
+    void addTape(Tape&);
+    void addTransition(const Transition&);
+    void step(const Transition&);
+    void run();
+    void print();
+    
+    std::vector<Transition>& getTransitions();
+    
 };
-
 
 #endif /* machine_hpp */

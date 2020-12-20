@@ -2,61 +2,71 @@
 //  machine.cpp
 //  turing-machine
 //
-//  Created by Ivan Toskov on 09/12/2020.
+//  Created by Ivan Toskov on 20/12/2020.
 //
 
 #include "machine.hpp"
 
-Tape::Tape(const std::string& elements) {
-    for (int i = (int)(elements.length() - 1); i >= 0; i--) {
-        this->right.push_back(elements[i]);
+TuringMachine::TuringMachine() {
+    this->currentState = "start";
+}
+
+TuringMachine::TuringMachine(const TuringMachine& other) {
+    this->currentState = other.currentState;
+    this->tape = other.tape;
+    this->transitions = other.transitions;
+}
+
+void TuringMachine::addTape(Tape& tape) {
+    this->tape = &tape;
+}
+
+void TuringMachine::addTransition(const Transition& transition) {
+    this->transitions.push_back(transition);
+}
+
+void TuringMachine::step(const Transition& transition) {
+    for (int i = 0; i < this->tape->getSize() - 1; i++) {
+        if (transition.getReadSymbol() == this->tape->getCurrent()) {
+            //this->tape->write(transition.getWriteSymbol()[0]);
+            
+            if (transition.getCurrentState() == "increment") {
+                this->tape->write(this->tape->getCurrent() + 1);
+            }
+            
+            if (transition.getCurrentState() == "decrement") {
+                this->tape->write(this->tape->getCurrent() - 1);
+            }
+            
+            this->currentState = transition.getNextState();
+            
+            switch(this->transitions[i + 1].getCommand()[0]) {
+                case 'R' :
+                    this->tape->moveRight();
+                    break;
+                case 'L':
+                    this->tape->moveLeft();
+                    break;
+            }
+            
+        } else {
+            this->tape->moveRight();
+        }
     }
-    this->current = this->right.back();
-    this->right.pop_back();
 }
 
-Tape::Tape(const Tape& other) {
-    this->left = other.left;
-    this->right = other.right;
-    this->current = other.current;
-}
-
-char Tape::read() const {
-    return this->current;
-}
-
-void Tape::write(char symbol) {
-    this->current = symbol;
-}
-
-void Tape::moveLeft() {
-    this->right.push_back(this->current);
-    if (this->left.empty()) {
-        this->left.push_back(' ');
+void TuringMachine::run() {
+    while(this->currentState != "" && this->currentState != "halt") {
+        for (int i = 0; i <= this->transitions.size() - 1; i++) {
+            step(this->transitions[i]);
+        }
     }
-    this->current = this->left.back();
-    this->left.pop_back();
 }
 
-void Tape::moveRight() {
-    this->left.push_back(this->current);
-    if (this->right.empty()) {
-        this->right.push_back(' ');
-    }
-    this->current = this->right.back();
-    this->right.pop_back();
+void TuringMachine::print() {
+    std::cout << *this->tape << std::endl;
 }
 
-std::ostream& operator<<(std::ostream& out, Tape &tape) {
-    for (int i = (int)(tape.left.size() - 1); i >= 0; i--) {
-        out << tape.left[i];
-    }
-
-    out << tape.current;
-
-    for (int i = (int)(tape.right.size() - 1); i >= 0; i--) {
-        out << tape.right[i];
-    }
-    return out;
+std::vector<Transition>& TuringMachine::getTransitions() {
+    return this->transitions;
 }
-

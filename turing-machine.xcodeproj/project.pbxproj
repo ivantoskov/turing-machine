@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79A4BDAD258F6E020099FA04 /* transition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79A4BDAB258F6E020099FA04 /* transition.cpp */; };
+		79A4BDB2258F6EF20099FA04 /* machine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79A4BDB0258F6EF20099FA04 /* machine.cpp */; };
 		79F9AF6E258167B6007935CD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79F9AF6D258167B6007935CD /* main.cpp */; };
-		79F9AF772581682E007935CD /* machine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79F9AF752581682E007935CD /* machine.cpp */; };
+		79F9AF772581682E007935CD /* tape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79F9AF752581682E007935CD /* tape.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,10 +26,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		79A4BDAB258F6E020099FA04 /* transition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = transition.cpp; sourceTree = "<group>"; };
+		79A4BDAC258F6E020099FA04 /* transition.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = transition.hpp; sourceTree = "<group>"; };
+		79A4BDB0258F6EF20099FA04 /* machine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = machine.cpp; sourceTree = "<group>"; };
+		79A4BDB1258F6EF20099FA04 /* machine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = machine.hpp; sourceTree = "<group>"; };
 		79F9AF6A258167B6007935CD /* turing-machine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "turing-machine"; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F9AF6D258167B6007935CD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		79F9AF752581682E007935CD /* machine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = machine.cpp; sourceTree = "<group>"; };
-		79F9AF762581682E007935CD /* machine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = machine.hpp; sourceTree = "<group>"; };
+		79F9AF752581682E007935CD /* tape.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tape.cpp; sourceTree = "<group>"; };
+		79F9AF762581682E007935CD /* tape.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = tape.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,8 +67,12 @@
 			isa = PBXGroup;
 			children = (
 				79F9AF6D258167B6007935CD /* main.cpp */,
-				79F9AF752581682E007935CD /* machine.cpp */,
-				79F9AF762581682E007935CD /* machine.hpp */,
+				79F9AF752581682E007935CD /* tape.cpp */,
+				79F9AF762581682E007935CD /* tape.hpp */,
+				79A4BDAB258F6E020099FA04 /* transition.cpp */,
+				79A4BDAC258F6E020099FA04 /* transition.hpp */,
+				79A4BDB0258F6EF20099FA04 /* machine.cpp */,
+				79A4BDB1258F6EF20099FA04 /* machine.hpp */,
 			);
 			path = "turing-machine";
 			sourceTree = "<group>";
@@ -123,8 +133,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79A4BDAD258F6E020099FA04 /* transition.cpp in Sources */,
+				79A4BDB2258F6EF20099FA04 /* machine.cpp in Sources */,
 				79F9AF6E258167B6007935CD /* main.cpp in Sources */,
-				79F9AF772581682E007935CD /* machine.cpp in Sources */,
+				79F9AF772581682E007935CD /* tape.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
