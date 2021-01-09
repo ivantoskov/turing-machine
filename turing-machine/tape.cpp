@@ -9,12 +9,12 @@
 
 Tape::Tape(const std::string& elements) {
     for (int i = (int)(elements.length() - 1); i >= 0; i--) {
-        this->right.push_back(elements[i]);
+        right.push_back(elements[i]);
     }
-    this->current = this->right.back();
-    this->right.pop_back();
+    current = this->right.back();
+    right.pop_back();
     
-    this->size = (int)elements.length();
+    size = (int)elements.length();
 }
 
 Tape::Tape(const Tape& other) {
@@ -24,37 +24,37 @@ Tape::Tape(const Tape& other) {
 }
 
 char Tape::read() const {
-    return this->current;
+    return current;
 }
 
 void Tape::write(char symbol) {
-    this->current = symbol;
+    current = symbol;
 }
 
 void Tape::moveLeft() {
-    this->right.push_back(this->current);
-    if (this->left.empty()) {
-        this->left.push_back(' ');
+    right.push_back(current);
+    if (left.empty()) {
+        left.push_back(' ');
     }
-    this->current = this->left.back();
-    this->left.pop_back();
+    current = left.back();
+    left.pop_back();
 }
 
 void Tape::moveRight() {
-    this->left.push_back(this->current);
-    if (this->right.empty()) {
-        this->right.push_back(' ');
+    left.push_back(current);
+    if (right.empty()) {
+        right.push_back(' ');
     }
-    this->current = this->right.back();
-    this->right.pop_back();
+    current = right.back();
+    right.pop_back();
 }
 
 int Tape::getSize() const {
-    return this->size;
+    return size;
 }
 
 char Tape::getCurrent() const {
-    return this->current;
+    return current;
 }
 
 std::ostream& operator<<(std::ostream& out, Tape &tape) {
@@ -69,6 +69,8 @@ std::ostream& operator<<(std::ostream& out, Tape &tape) {
     for (int i = (int)(tape.right.size() - 1); i >= 0; i--) {
         out << tape.right[i];
     }
+    
+    out << std::endl;
     
     return out;
 }

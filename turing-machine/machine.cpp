@@ -25,48 +25,51 @@ void TuringMachine::addTransition(const Transition& transition) {
     this->transitions.push_back(transition);
 }
 
-void TuringMachine::step(const Transition& transition) {
-    for (int i = 0; i < this->tape->getSize() - 1; i++) {
-        if (transition.getReadSymbol() == this->tape->getCurrent()) {
-            //this->tape->write(transition.getWriteSymbol()[0]);
-            
-            if (transition.getCurrentState() == "increment") {
-                this->tape->write(this->tape->getCurrent() + 1);
-            }
-            
-            if (transition.getCurrentState() == "decrement") {
-                this->tape->write(this->tape->getCurrent() - 1);
-            }
-            
-            this->currentState = transition.getNextState();
-            
-            switch(this->transitions[i + 1].getCommand()[0]) {
-                case 'R' :
-                    this->tape->moveRight();
-                    break;
-                case 'L':
-                    this->tape->moveLeft();
-                    break;
-            }
-            
-        } else {
-            this->tape->moveRight();
-        }
+void TuringMachine::step() {
+    if (currentState == "halt") return;
+    
+    while (currentTransition->getReadSymbol() != tape->getCurrent()) {
+        // TODO: Change head direction based on the command of the previous transition
+        tape->moveRight();
+    }
+    
+    if (currentTransition->getWriteSymbol() != '\0') {
+        tape->write(currentTransition->getWriteSymbol());
+    }
+    
+    currentState = currentTransition->getNextState();
+        
+    switch(currentTransition->getCommand()) {
+        case 'R':
+            tape->moveRight();
+            break;
+        case 'L':
+            tape->moveLeft();
+            break;
     }
 }
 
 void TuringMachine::run() {
-    while(this->currentState != "" && this->currentState != "halt") {
-        for (int i = 0; i <= this->transitions.size() - 1; i++) {
-            step(this->transitions[i]);
+    while (currentState != "" && currentState != "halt") {
+        for (int i = 0; i < transitions.size(); i++) {
+            currentTransition = &transitions[i];
+            step();
         }
+        currentState = "halt";
     }
+    
 }
 
 void TuringMachine::print() {
-    std::cout << *this->tape << std::endl;
+    std::cout << *this->tape;
 }
 
 std::vector<Transition>& TuringMachine::getTransitions() {
     return this->transitions;
+}
+
+void TuringMachine::printTranstitons() {
+    for (int i = 0; i < transitions.size(); i++) {
+        std::cout << transitions[i];
+    }
 }

@@ -10,17 +10,19 @@
 
 int main(int argc, const char * argv[]) {
     
-    Tape t1 = Tape("00110");
-    std::cout << t1 << std::endl;
+    Tape t2 = Tape("01001");
+    Transition transition1 = Transition("start", '1', '0', 'R', "t2");
+    Transition transition2 = Transition("t2", '1', '0', 'R', "halt");
     
-    Transition tr1 = Transition("increment", '1', "R", "halt");
-    //Transition tr2 = Transition("decrement", '1', "R", "halt");
+    TuringMachine tm2;
+    tm2.addTape(t2);
+    tm2.addTransition(transition1);
+    tm2.addTransition(transition2);
+    
+    tm2.print();
+    tm2.run();
+    tm2.printTranstitons();
+    tm2.print();
+    
 
-    TuringMachine tm;
-    tm.addTape(t1);
-    tm.addTransition(tr1);
-    //tm.addTransition(tr2);
-    tm.run();
-    tm.print();
-    
 }

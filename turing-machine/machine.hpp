@@ -11,8 +11,10 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <cassert>
 #include "tape.hpp"
 #include "transition.hpp"
+
 
 class TuringMachine {
     
@@ -20,6 +22,7 @@ private:
     std::string currentState;
     Tape* tape;
     std::vector<Transition> transitions;
+    Transition* currentTransition;
     
 public:
     TuringMachine();
@@ -27,11 +30,13 @@ public:
     
     void addTape(Tape&);
     void addTransition(const Transition&);
-    void step(const Transition&);
+    void step();
     void run();
     void print();
     
     std::vector<Transition>& getTransitions();
+    
+    void printTranstitons();
     
 };
 

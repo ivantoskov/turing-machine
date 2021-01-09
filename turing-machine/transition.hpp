@@ -12,25 +12,28 @@
 #include <iostream>
 #include <string>
 
+enum Command { increment, decrement }; // !!!!
+
 class Transition {
     
 private:
     char read;
-    std::string command;
+    char write;
+    char command;
     std::string currentState;
     std::string nextState;
-    
+        
 public:
-    Transition(const std::string&, const char, const std::string&, const std::string&);
+    Transition(const std::string&, const char, const char, const char, const std::string&);
     Transition(const Transition&);
     
     char getReadSymbol() const;
-    std::string getCommand() const;
+    char getWriteSymbol() const;
+    char getCommand() const;
     std::string getCurrentState() const;
     std::string getNextState() const;
-    
+        
     friend std::ostream& operator<<(std::ostream&, Transition&);
-    
 };
 
 #endif /* transition_hpp */
