@@ -29,8 +29,17 @@ void TuringMachine::step() {
     if (currentState == "halt") return;
     
     while (currentTransition->getReadSymbol() != tape->getCurrent()) {
-        // TODO: Change head direction based on the command of the previous transition
-        tape->moveRight();
+        if (currentTransition == &transitions[0]) {
+            tape->moveRight();
+        }
+        switch(previousTransition->getCommand()) {
+            case 'R':
+                tape->moveRight();
+                break;
+            case 'L':
+                tape->moveLeft();
+                break;
+        }
     }
     
     if (currentTransition->getWriteSymbol() != '\0') {
@@ -53,11 +62,13 @@ void TuringMachine::run() {
     while (currentState != "" && currentState != "halt") {
         for (int i = 0; i < transitions.size(); i++) {
             currentTransition = &transitions[i];
+            if (i > 0) {
+                previousTransition = &transitions[i - 1];
+            }
             step();
         }
         currentState = "halt";
     }
-    
 }
 
 void TuringMachine::print() {

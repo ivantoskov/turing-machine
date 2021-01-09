@@ -12,8 +12,6 @@
 #include <iostream>
 #include <string>
 
-enum Command { increment, decrement }; // !!!!
-
 class Transition {
     
 private:

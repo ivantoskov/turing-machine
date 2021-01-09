@@ -10,19 +10,38 @@
 
 int main(int argc, const char * argv[]) {
     
-    Tape t2 = Tape("01001");
-    Transition transition1 = Transition("start", '1', '0', 'R', "t2");
-    Transition transition2 = Transition("t2", '1', '0', 'R', "halt");
+    Tape t1 = Tape("aaabbbccc");
     
-    TuringMachine tm2;
-    tm2.addTape(t2);
-    tm2.addTransition(transition1);
-    tm2.addTransition(transition2);
+    Transition tr1 = Transition("q1", 'a', 'x', 'R', "q2");
+    Transition tr2 = Transition("q2", 'b', 'y', 'R', "q3");
+    Transition tr3 = Transition("q3", 'c', 'z', 'L', "q4");
+    Transition tr4 = Transition("q4", 'x', 'x', 'R', "q1");
+    Transition tr5 = Transition("q1", 'a', 'x', 'R', "q2");
+    Transition tr6 = Transition("q2", 'b', 'y', 'R', "q3");
+    Transition tr7 = Transition("q3", 'c', 'z', 'L', "q4");
+    Transition tr8 = Transition("q4", 'x', 'x', 'R', "q1");
+    Transition tr9 = Transition("q1", 'a', 'x', 'R', "q2");
+    Transition tr10 = Transition("q2", 'b', 'y', 'R', "q3");
+    Transition tr11 = Transition("q3", 'c', 'z', 'R', "halt");
     
-    tm2.print();
-    tm2.run();
-    tm2.printTranstitons();
-    tm2.print();
     
+    TuringMachine tm;
+    tm.addTape(t1);
+    tm.addTransition(tr1);
+    tm.addTransition(tr2);
+    tm.addTransition(tr3);
+    tm.addTransition(tr4);
+    tm.addTransition(tr5);
+    tm.addTransition(tr6);
+    tm.addTransition(tr7);
+    tm.addTransition(tr8);
+    tm.addTransition(tr9);
+    tm.addTransition(tr10);
+    tm.addTransition(tr11);
+        
+    tm.print();
+    tm.run();
+    tm.printTranstitons();
+    tm.print();
 
 }

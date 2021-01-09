@@ -15,14 +15,14 @@
 #include "tape.hpp"
 #include "transition.hpp"
 
-
 class TuringMachine {
     
 private:
-    std::string currentState;
     Tape* tape;
+    std::string currentState;
     std::vector<Transition> transitions;
     Transition* currentTransition;
+    Transition* previousTransition;
     
 public:
     TuringMachine();
