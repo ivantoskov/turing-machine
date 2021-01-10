@@ -49,10 +49,6 @@ void Tape::moveRight() {
     right.pop_back();
 }
 
-int Tape::getSize() const {
-    return size;
-}
-
 char Tape::getCurrent() const {
     return current;
 }

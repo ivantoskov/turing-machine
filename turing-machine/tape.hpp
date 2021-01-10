@@ -26,16 +26,21 @@ public:
     Tape(const std::string&);
     Tape(const Tape&);
         
+    // Read the value of the element under the tape head
     char read() const;
+    
+    // Change the value of the element under the tape head
     void write(char);
+    
+    // Move the tape head left
     void moveLeft();
+    
+    // Move the tape head right
     void moveRight();
     
-    int getSize() const;
     char getCurrent() const;
-    
     friend std::ostream& operator<<(std::ostream&, Tape&);
-    
+
 };
 
 #endif /* tape_hpp */
