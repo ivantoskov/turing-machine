@@ -10,8 +10,6 @@
 
 int main(int argc, const char * argv[]) {
     
-    // TODO: hash map - [q1: Transition]
-    
     Tape t1 = Tape("aaabbbccc");
     
     TuringMachine tm;
@@ -20,6 +18,5 @@ int main(int argc, const char * argv[]) {
 
     tm.print();
     tm.run();
-    tm.printTransitions();
     tm.print();
 }

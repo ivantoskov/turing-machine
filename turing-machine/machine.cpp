@@ -8,51 +8,40 @@
 #include "machine.hpp"
 
 TuringMachine::TuringMachine() {
-    currentState = "start";
-    isFinished = false;
+    currentState = "q0";
 }
 
 TuringMachine::TuringMachine(const TuringMachine& other) {
     this->currentState = other.currentState;
     this->tape = other.tape;
-    this->transitions = other.transitions;
-    this->isFinished = false;
 }
 
 void TuringMachine::addTape(Tape& tape) {
+    // TODO: Implement multiple tapes
     this->tape = &tape;
 }
 
 void TuringMachine::addTransition(Transition& transition) {
-    this->transitions.push_back(transition);
+    map[transition.getCurrentState()].push_back(transition);
 }
 
 void TuringMachine::step() {
-    if (currentState == "halt") return;
     
-    while (currentTransition->getReadSymbol() != tape->getCurrent()) {
-        
-        if (currentTransition == &transitions[0]) {
-                    tape->moveRight();
-        }
-        
-        switch(previousTransition->getCommand()) {
-            case 'R':
-                tape->moveRight();
-                break;
-            case 'L':
-                tape->moveLeft();
-                break;
-        }
+    Transition* next = findTransition(tape->read());
+    
+    if (next == nullptr) {
+        currentState = "";
+        return;
     }
     
-    if (currentTransition->getWriteSymbol() != '\0') {
-        tape->write(currentTransition->getWriteSymbol());
+    std::cout << *next;
+    currentState = next->getNextState();
+
+    if (next->getWriteSymbol() != '\0') {
+        tape->write(next->getWriteSymbol());
     }
-    
-    currentState = currentTransition->getNextState();
-        
-    switch(currentTransition->getCommand()) {
+
+    switch(next->getCommand()) {
         case 'R':
             tape->moveRight();
             break;
@@ -64,34 +53,21 @@ void TuringMachine::step() {
 
 void TuringMachine::run() {
     while (currentState != "" && currentState != "halt") {
-        for (int i = 0; i < transitions.size(); i++) {
-            currentTransition = &transitions[i];
-            if (i > 0) {
-                previousTransition = &transitions[i - 1];
-            }
-            step();
-        }
-        currentState = "halt";
+        step();
     }
 }
 
 void TuringMachine::print() {
-    std::cout << *this->tape;
-}
-
-void TuringMachine::printTransitions() {
-    for (int i = 0; i < transitions.size(); i++) {
-        std::cout << transitions[i];
-    }
+    std::cout << *tape;
 }
 
 void TuringMachine::readFromFile(const std::string& fileName) {
     std::ifstream input(fileName, std::ios::in);
     if (input.is_open()) {
         std::string line;
-        std::regex e("[{}(\\->)]");
+        std::regex expression("[{}(\\->)]");
         while (getline(input, line)){
-            std::string replaced = std::regex_replace(line, e, " ");
+            std::string replaced = std::regex_replace(line, expression, " ");
             
             std::string readSymbols, writeSymbols;
             std::string currentState, nextState;
@@ -110,4 +86,31 @@ void TuringMachine::readFromFile(const std::string& fileName) {
 
 bool TuringMachine::isFinishedSuccessfully() {
     return currentState == "halt";
+}
+
+std::vector<Transition>& TuringMachine::getTransitions(const std::string state) {
+    return map[state];
+}
+
+std::vector<std::string> TuringMachine::getStates() {
+    std::vector<std::string> states;
+    for(std::map<std::string,std::vector<Transition>>::iterator it = map.begin(); it != map.end(); it++) {
+      states.push_back(it->first);
+    }
+    return states;
+}
+
+Transition* TuringMachine::findTransition(const char& input) {
+    std::vector<Transition>& transitions = map[currentState];
+    Transition* found = nullptr;
+    for (int i = 0; i < transitions.size(); i++) {
+        if (input == transitions[i].getReadSymbol()) {
+            found = &transitions[i];
+        }
+    }
+    return found;
+}
+
+void TuringMachine::setStartState(const std::string& state) {
+    currentState = state;
 }

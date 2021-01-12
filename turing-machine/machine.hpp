@@ -11,10 +11,10 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include <map>
 #include <fstream>
 #include <regex>
 #include <sstream>
+#include <map>
 #include "tape.hpp"
 #include "transition.hpp"
 
@@ -23,10 +23,9 @@ class TuringMachine {
 private:
     Tape* tape;
     std::string currentState;
-    std::vector<Transition> transitions;
     Transition* currentTransition;
-    Transition* previousTransition;
-    bool isFinished;
+    std::map<std::string, std::vector<Transition>> map;
+    Transition* findTransition(const char&);
     
 public:
     TuringMachine();
@@ -47,14 +46,21 @@ public:
     // Print tape(s)
     void print();
     
-    // Print all transitions
-    void printTransitions();
-    
     // Read Turing machine transtions from text file
     void readFromFile(const std::string&);
     
     // Returns true if Turing machine has reached "halt" state
     bool isFinishedSuccessfully();
+    
+    // Get all transitions for a state
+    std::vector<Transition>& getTransitions(const std::string);
+    
+    // Get all of the states
+    std::vector<std::string> getStates();
+    
+    // Set the start state of Turing machine
+    void setStartState(const std::string&);
+    
 };
 
 #endif /* machine_hpp */

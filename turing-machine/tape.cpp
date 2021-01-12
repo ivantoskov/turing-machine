@@ -49,10 +49,6 @@ void Tape::moveRight() {
     right.pop_back();
 }
 
-char Tape::getCurrent() const {
-    return current;
-}
-
 std::ostream& operator<<(std::ostream& out, Tape &tape) {
     
     for (int i = (int)(tape.left.size() - 1); i >= 0; i--) {

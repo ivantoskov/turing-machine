@@ -37,10 +37,8 @@ public:
     
     // Move the tape head right
     void moveRight();
-    
-    char getCurrent() const;
+        
     friend std::ostream& operator<<(std::ostream&, Tape&);
-
 };
 
 #endif /* tape_hpp */
