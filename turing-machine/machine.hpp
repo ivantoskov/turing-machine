@@ -9,8 +9,6 @@
 #define machine_hpp
 
 #include <stdio.h>
-#include <iostream>
-#include <string>
 #include <fstream>
 #include <regex>
 #include <sstream>
@@ -23,10 +21,8 @@ class TuringMachine {
 private:
     Tape* tape;
     std::string currentState;
-    Transition* currentTransition;
     std::map<std::string, std::vector<Transition>> map;
-    Transition* findTransition(const char&);
-    
+    Transition* findTransition(const char&);    
 public:
     TuringMachine();
     TuringMachine(const TuringMachine&);
@@ -60,6 +56,9 @@ public:
     
     // Set the start state of Turing machine
     void setStartState(const std::string&);
+    
+    // Composition two Turing machines
+    void compose(TuringMachine);
     
 };
 

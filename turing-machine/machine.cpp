@@ -100,11 +100,11 @@ std::vector<std::string> TuringMachine::getStates() {
     return states;
 }
 
-Transition* TuringMachine::findTransition(const char& input) {
+Transition* TuringMachine::findTransition(const char& readSymbol) {
     std::vector<Transition>& transitions = map[currentState];
     Transition* found = nullptr;
     for (int i = 0; i < transitions.size(); i++) {
-        if (input == transitions[i].getReadSymbol()) {
+        if (readSymbol == transitions[i].getReadSymbol()) {
             found = &transitions[i];
         }
     }
@@ -113,4 +113,24 @@ Transition* TuringMachine::findTransition(const char& input) {
 
 void TuringMachine::setStartState(const std::string& state) {
     currentState = state;
+}
+
+void TuringMachine::compose(TuringMachine other) {
+    std::vector<std::string> otherStates = other.getStates();
+    for (int i = 0; i < this->getStates().size(); i++) {
+        std::vector<Transition>& transitions = map[this->getStates()[i]];
+        for (int j = 0; j < transitions.size(); j++) {
+            Transition& transition = transitions[j];
+            if (transition.getNextState() == "halt") {
+                transition.setNextState(other.currentState);
+            }
+        }
+    }
+    
+    for (int i = 0; i < otherStates.size(); i++) {
+        std::vector<Transition>& otherTransitions = other.getTransitions(otherStates[i]);
+        for (int j = 0; j < otherTransitions.size(); j++) {
+            map[otherStates[i]].push_back(otherTransitions[j]);
+        }
+    }
 }

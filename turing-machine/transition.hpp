@@ -30,6 +30,8 @@ public:
     char getCommand() const;
     std::string getCurrentState() const;
     std::string getNextState() const;
+    
+    void setNextState(const std::string&);
         
     friend std::ostream& operator<<(std::ostream&, Transition&);
 };
