@@ -20,6 +20,7 @@ class TuringMachine {
     
 private:
     Tape* tape;
+    std::vector<Tape> tapes;
     std::string currentState;
     std::map<std::string, std::vector<Transition>> map;
     Transition* findTransition(const char&);    
@@ -42,7 +43,7 @@ public:
     // Print tape(s)
     void print();
     
-    // Read Turing machine transtions from text file
+    // Read Turing machine transtions from a text file
     void readFromFile(const std::string&);
     
     // Returns true if Turing machine has reached "halt" state
@@ -51,14 +52,18 @@ public:
     // Get all transitions for a state
     std::vector<Transition>& getTransitions(const std::string);
     
-    // Get all of the states
+    // Get all Turing machine states
     std::vector<std::string> getStates();
     
     // Set the start state of Turing machine
     void setStartState(const std::string&);
     
-    // Composition two Turing machines
+    // Composition of two Turing machines
     void compose(TuringMachine);
+    
+    // Converts multitape Turing machine to its eqivalent single tape Turing machine
+    // Every multitape Turing machine has an equivalent single tape Turing machine
+    void toSingleTape();
     
 };
 

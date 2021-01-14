@@ -15,19 +15,19 @@
 class Transition {
     
 private:
-    char read;
-    char write;
-    char command;
+    std::string read;
+    std::string write;
+    std::string command;
     std::string currentState;
     std::string nextState;
         
 public:
-    Transition(const std::string&, const char, const char, const char, const std::string&);
+    Transition(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&);
     Transition(const Transition&);
     
-    char getReadSymbol() const;
-    char getWriteSymbol() const;
-    char getCommand() const;
+    std::string getReadSymbol() const;
+    std::string getWriteSymbol() const;
+    std::string getCommand() const;
     std::string getCurrentState() const;
     std::string getNextState() const;
     

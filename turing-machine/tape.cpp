@@ -62,7 +62,7 @@ std::ostream& operator<<(std::ostream& out, Tape &tape) {
         out << tape.right[i];
     }
     
-    out << std::endl;
+    //out << std::endl;
     
     return out;
 }

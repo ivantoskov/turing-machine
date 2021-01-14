@@ -17,8 +17,7 @@ TuringMachine::TuringMachine(const TuringMachine& other) {
 }
 
 void TuringMachine::addTape(Tape& tape) {
-    // TODO: Implement multiple tapes
-    this->tape = &tape;
+    tapes.push_back(tape);
 }
 
 void TuringMachine::addTransition(Transition& transition) {
@@ -27,7 +26,7 @@ void TuringMachine::addTransition(Transition& transition) {
 
 void TuringMachine::step() {
     
-    Transition* next = findTransition(tape->read());
+    Transition* next = findTransition(tapes[0].read());
     
     if (next == nullptr) {
         currentState = "";
@@ -36,18 +35,36 @@ void TuringMachine::step() {
     
     std::cout << *next;
     currentState = next->getNextState();
+    
+    if (tapes.size() == 1) {
+        if (next->getWriteSymbol()[0] != '\0') {
+            tapes[0].write(next->getWriteSymbol()[0]);
+        }
 
-    if (next->getWriteSymbol() != '\0') {
-        tape->write(next->getWriteSymbol());
+        switch(next->getCommand()[0]) {
+            case 'R':
+                tapes[0].moveRight();
+                break;
+            case 'L':
+                tapes[0].moveLeft();
+                break;
+        }
+        return;
     }
+    
+    for (int i = 0; i < tapes.size(); i++) {
+        if (next->getWriteSymbol()[i] != '\0') {
+            tapes[i].write(next->getWriteSymbol()[i]);
+        }
 
-    switch(next->getCommand()) {
-        case 'R':
-            tape->moveRight();
-            break;
-        case 'L':
-            tape->moveLeft();
-            break;
+        switch(next->getCommand()[i]) {
+            case 'R':
+                tapes[i].moveRight();
+                break;
+            case 'L':
+                tapes[i].moveLeft();
+                break;
+        }
     }
 }
 
@@ -58,7 +75,15 @@ void TuringMachine::run() {
 }
 
 void TuringMachine::print() {
-    std::cout << *tape;
+    if (tapes.size() == 1) {
+        std::cout << tapes[0] << std::endl;
+        return;
+    }
+    
+    for (int i = 0; i < tapes.size(); i++) {
+        std::cout << tapes[i] << std::endl;
+    }
+    
 }
 
 void TuringMachine::readFromFile(const std::string& fileName) {
@@ -77,7 +102,7 @@ void TuringMachine::readFromFile(const std::string& fileName) {
             
             ss >> readSymbols >> currentState >> writeSymbols >> nextState >> command;
             
-            Transition tr = Transition(currentState, readSymbols[0], writeSymbols[0], command[0], nextState);
+            Transition tr = Transition(currentState, readSymbols, writeSymbols, command, nextState);
             this->addTransition(tr);
         }
         input.close();
@@ -104,7 +129,7 @@ Transition* TuringMachine::findTransition(const char& readSymbol) {
     std::vector<Transition>& transitions = map[currentState];
     Transition* found = nullptr;
     for (int i = 0; i < transitions.size(); i++) {
-        if (readSymbol == transitions[i].getReadSymbol()) {
+        if (readSymbol == transitions[i].getReadSymbol()[0]) {
             found = &transitions[i];
         }
     }
@@ -133,4 +158,22 @@ void TuringMachine::compose(TuringMachine other) {
             map[otherStates[i]].push_back(otherTransitions[j]);
         }
     }
+}
+
+void TuringMachine::toSingleTape() {
+    if (tapes.size() == 1) {
+        return;
+    }
+    
+    std::stringstream ss("", std::ios_base::app | std::ios_base::out);
+    
+    for (int i = 0; i < tapes.size(); i++) {
+        ss << '#';
+        ss << tapes[i];
+    }
+    ss << '#';
+    
+    tapes.erase(tapes.begin(), tapes.end());
+    Tape tape = Tape(ss.str());
+    addTape(tape);
 }

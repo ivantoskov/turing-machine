@@ -7,7 +7,7 @@
 
 #include "transition.hpp"
 
-Transition::Transition(const std::string& currentState, const char read, const char write, const char command, const std::string& nextState) {
+Transition::Transition(const std::string& currentState, const std::string& read, const std::string& write, const std::string& command, const std::string& nextState) {
     this->currentState = currentState;
     this->read = read;
     this->write = write;
@@ -23,15 +23,15 @@ Transition::Transition(const Transition& other) {
     this->nextState = other.nextState;
 }
 
-char Transition::getReadSymbol() const {
+std::string Transition::getReadSymbol() const {
     return read;
 }
 
-char Transition::getWriteSymbol() const {
+std::string Transition::getWriteSymbol() const {
     return write;
 }
 
-char Transition::getCommand() const {
+std::string Transition::getCommand() const {
     return command;
 }
 
