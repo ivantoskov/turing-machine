@@ -19,7 +19,6 @@
 class TuringMachine {
     
 private:
-    Tape* tape;
     std::vector<Tape> tapes;
     std::string currentState;
     std::map<std::string, std::vector<Transition>> map;
@@ -59,11 +58,14 @@ public:
     void setStartState(const std::string&);
     
     // Composition of two Turing machines
-    void compose(TuringMachine);
+    void compose(TuringMachine&);
     
     // Converts multitape Turing machine to its eqivalent single tape Turing machine
     // Every multitape Turing machine has an equivalent single tape Turing machine
     void toSingleTape();
+    
+    // Branching of two Turing machines concerning a third
+    void branch(TuringMachine&, TuringMachine&, Tape&);
     
 };
 

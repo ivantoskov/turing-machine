@@ -13,7 +13,7 @@ TuringMachine::TuringMachine() {
 
 TuringMachine::TuringMachine(const TuringMachine& other) {
     this->currentState = other.currentState;
-    this->tape = other.tape;
+    this->tapes = other.tapes;
 }
 
 void TuringMachine::addTape(Tape& tape) {
@@ -35,22 +35,6 @@ void TuringMachine::step() {
     
     std::cout << *next;
     currentState = next->getNextState();
-    
-    if (tapes.size() == 1) {
-        if (next->getWriteSymbol()[0] != '\0') {
-            tapes[0].write(next->getWriteSymbol()[0]);
-        }
-
-        switch(next->getCommand()[0]) {
-            case 'R':
-                tapes[0].moveRight();
-                break;
-            case 'L':
-                tapes[0].moveLeft();
-                break;
-        }
-        return;
-    }
     
     for (int i = 0; i < tapes.size(); i++) {
         if (next->getWriteSymbol()[i] != '\0') {
@@ -83,7 +67,6 @@ void TuringMachine::print() {
     for (int i = 0; i < tapes.size(); i++) {
         std::cout << tapes[i] << std::endl;
     }
-    
 }
 
 void TuringMachine::readFromFile(const std::string& fileName) {
@@ -140,7 +123,7 @@ void TuringMachine::setStartState(const std::string& state) {
     currentState = state;
 }
 
-void TuringMachine::compose(TuringMachine other) {
+void TuringMachine::compose(TuringMachine& other) {
     std::vector<std::string> otherStates = other.getStates();
     for (int i = 0; i < this->getStates().size(); i++) {
         std::vector<Transition>& transitions = map[this->getStates()[i]];
@@ -176,4 +159,16 @@ void TuringMachine::toSingleTape() {
     tapes.erase(tapes.begin(), tapes.end());
     Tape tape = Tape(ss.str());
     addTape(tape);
+}
+
+void TuringMachine::branch(TuringMachine& second, TuringMachine& third, Tape& inputTape) {
+    third.addTape(inputTape);
+    third.run();
+    if (third.isFinishedSuccessfully()) {
+        this->addTape(inputTape);
+        this->run();
+    } else {
+        second.addTape(inputTape);
+        second.run();
+    }
 }
