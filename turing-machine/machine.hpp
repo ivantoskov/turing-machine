@@ -15,6 +15,7 @@
 #include <map>
 #include "tape.hpp"
 #include "transition.hpp"
+#include "defs.hpp"
 
 class TuringMachine {
     

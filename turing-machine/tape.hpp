@@ -12,7 +12,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 #include "math.h"
+#include "defs.hpp"
 
 class Tape {
     
@@ -21,6 +23,8 @@ private:
     std::vector<char> left;
     std::vector<char> right;
     int size;
+    std::vector<Tape> multitape;
+    void init(const std::string&);
     
 public:
     Tape(const std::string&);
@@ -32,12 +36,15 @@ public:
     // Change the value of the element under the tape head
     void write(char);
     
-    // Move the tape head left
+    // Move tape head to the left
     void moveLeft();
     
-    // Move the tape head right
+    // Move tape head to the right
     void moveRight();
-        
+    
+    // Get multiple tapes
+    std::vector<Tape>& getMultitape();
+    
     friend std::ostream& operator<<(std::ostream&, Tape&);
 };
 

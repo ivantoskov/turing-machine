@@ -26,6 +26,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		797042E525B35BA6003E6669 /* defs.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = defs.hpp; sourceTree = "<group>"; };
 		79A4BDAB258F6E020099FA04 /* transition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = transition.cpp; sourceTree = "<group>"; };
 		79A4BDAC258F6E020099FA04 /* transition.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = transition.hpp; sourceTree = "<group>"; };
 		79A4BDB0258F6EF20099FA04 /* machine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = machine.cpp; sourceTree = "<group>"; };
@@ -73,6 +74,7 @@
 				79A4BDAC258F6E020099FA04 /* transition.hpp */,
 				79A4BDB0258F6EF20099FA04 /* machine.cpp */,
 				79A4BDB1258F6EF20099FA04 /* machine.hpp */,
+				797042E525B35BA6003E6669 /* defs.hpp */,
 			);
 			path = "turing-machine";
 			sourceTree = "<group>";

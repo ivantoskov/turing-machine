@@ -25,12 +25,22 @@ public:
     Transition(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&);
     Transition(const Transition&);
     
+    // Get the read symbol from transition
     std::string getReadSymbol() const;
+    
+    // Get the write symbol from transition
     std::string getWriteSymbol() const;
+    
+    // Get the command from transition 
     std::string getCommand() const;
+    
+    // Get the current state from transition
     std::string getCurrentState() const;
+    
+    // Get the next state from transition
     std::string getNextState() const;
     
+    // Change the next state of transition
     void setNextState(const std::string&);
         
     friend std::ostream& operator<<(std::ostream&, Transition&);

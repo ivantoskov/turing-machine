@@ -7,14 +7,28 @@
 
 #include "tape.hpp"
 
-Tape::Tape(const std::string& elements) {
-    for (int i = (int)(elements.length() - 1); i >= 0; i--) {
-        right.push_back(elements[i]);
+Tape::Tape(const std::string& str) {
+    if (str[0] == DELIMITER) {
+        std::stringstream ss(str);
+        std::string item;
+        while (getline(ss, item, DELIMITER)) {
+            if (item.empty()) {
+                continue;
+            }
+            multitape.push_back(Tape(item));
+        }
+        return;
+    }
+    init(str);
+}
+
+void Tape::init(const std::string& str) {
+    for (int i = (int)(str.length() - 1); i >= 0; i--) {
+        right.push_back(str[i]);
     }
     current = this->right.back();
     right.pop_back();
-    
-    size = (int)elements.length();
+    size = (int)str.length();
 }
 
 Tape::Tape(const Tape& other) {
@@ -47,6 +61,10 @@ void Tape::moveRight() {
     }
     current = right.back();
     right.pop_back();
+}
+
+std::vector<Tape>& Tape::getMultitape() {
+    return multitape;
 }
 
 std::ostream& operator<<(std::ostream& out, Tape &tape) {
