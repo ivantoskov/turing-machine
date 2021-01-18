@@ -20,7 +20,7 @@ void execute() {
     std::string fileName;
     std::cout << "Load transitions from a text file: ";
     getline (std::cin, fileName);
-    tm.readFromFile(fileName);
+    tm.readTransitions(fileName);
     tm.setStartState(START_STATE);
     std::cout << "Input tape: " << std::endl;
     tm.print();
@@ -40,15 +40,14 @@ int main(int argc, const char * argv[]) {
     
     //execute();
 
-//    //
-//    // Accepts the language { aⁿbⁿcⁿ | n ≥ 1 }, which is
-//    // a's followed by b's then c's of the same length.
-//    // e.g. "aabbcc", "aaabbbccc", "aaaabbbbcccc", ...
-//    //
+    
+//     Accepts the language { aⁿbⁿcⁿ | n ≥ 1 }, which is
+//     a's followed by b's then c's of the same length.
+//     e.g. "aabbcc", "aaabbbccc", "aaaabbbbcccc", ...
+    
 //    TuringMachine tm;
-//    Tape t1 = Tape("aabbcc");
-//    tm.addTape(t1);
-//    tm.readFromFile("three-equal-lengths.txt");
+//    tm.readTapes("three-equal-lengths-tapes.txt");
+//    tm.readTransitions("three-equal-lengths.txt");
 //    tm.setStartState(START_STATE);
 //
 //    tm.print();
@@ -62,10 +61,10 @@ int main(int argc, const char * argv[]) {
 //    TuringMachine tm3;
 //    Tape t3 = Tape("001001");
 //    tm3.addTape(t3);
-//    tm3.readFromFile("tm3.txt");
+//    tm3.readTransitions("tm3.txt");
 //
 //    TuringMachine tm4;
-//    tm4.readFromFile("tm4.txt");
+//    tm4.readTransitions("tm4.txt");
 //
 //    tm3.compose(tm4);
 //
@@ -75,26 +74,22 @@ int main(int argc, const char * argv[]) {
     //
     // Multitape Turing machine
     //
-    TuringMachine tm;
-    Tape t1 = Tape("#00001#11110#00100#");
-
-    Transition tr1 = Transition("q0", "010", "XYZ", "RRR", "q1");
-    Transition tr2 = Transition("q1", "010", "ZYX", "RRL", "q2");
-    Transition tr3 = Transition("q2", "01Z", "00X", "SSS", "accept");
-    tm.addTape(t1);
-    tm.addTransition(tr1);
-    tm.addTransition(tr2);
-    tm.addTransition(tr3);
-
-    tm.print();
-    tm.run();
-    tm.print();
+//    TuringMachine tm;
+//
+//    tm.readTapes("multitape-tapes.txt");
+//    tm.readTransitions("multitape-transitions.txt");
+//
+//    tm.print();
+//    tm.run();
+//    tm.toSingleTape();
+//    tm.print();
+//    tm.saveTapes("multitape-output.txt");
     
 //    //
 //    // Branching Turing machines
 //    //
 //    TuringMachine tm3;
-//    tm3.readFromFile("ndtm.txt");
+//    tm3.readTransitions("ndtm.txt");
 //
 //    TuringMachine tm2;
 //    Transition tr1 = Transition("q0", "0", "X", "R", "q1");

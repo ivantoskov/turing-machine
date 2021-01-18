@@ -20,7 +20,6 @@
 class TuringMachine {
     
 private:
-    Tape* singleTape;
     std::vector<Tape> tapes;
     std::string currentState;
     std::map<std::string, std::vector<Transition>> map;
@@ -44,16 +43,19 @@ public:
     // Print tape(s)
     void print();
     
-    // Read Turing machine transtions from a text file
-    void readFromFile(const std::string&);
+    // Read tapes from a text file
+    void readTapes(const std::string&);
     
-    // Save tape(s) to a textfile
+    // Read Turing machine transtions from a text file
+    void readTransitions(const std::string&);
+    
+    // Save tape(s) to a text file
     void saveTapes(const std::string);
     
-    // Returns true if Turing machine has reached "halt" state
+    // Returns true if Turing machine has reached "accept" state
     bool isFinishedSuccessfully();
     
-    // Get all transitions for a state
+    // Get all transitions for a single state
     std::vector<Transition>& getTransitions(const std::string);
     
     // Get all Turing machine states
@@ -65,12 +67,12 @@ public:
     // Composition of two Turing machines
     void compose(TuringMachine&);
     
+    // Branching of two Turing machines concerning a third
+    void branch(TuringMachine&, TuringMachine&, Tape&);
+    
     // Converts multitape Turing machine to its eqivalent single tape Turing machine
     // Every multitape Turing machine has an equivalent single tape Turing machine
     void toSingleTape();
-    
-    // Branching of two Turing machines concerning a third
-    void branch(TuringMachine&, TuringMachine&, Tape&);
     
 };
 

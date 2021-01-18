@@ -54,5 +54,6 @@ std::ostream& operator<<(std::ostream& out, Transition &transition) {
     << "{" << transition.nextState << "}"
     << transition.command
     << std::endl;
+    
     return out;
 }

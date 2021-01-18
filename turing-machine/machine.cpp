@@ -8,7 +8,7 @@
 #include "machine.hpp"
 
 TuringMachine::TuringMachine() {
-    currentState = START_STATE;
+    setStartState(START_STATE);
 }
 
 TuringMachine::TuringMachine(const TuringMachine& other) {
@@ -59,13 +59,13 @@ void TuringMachine::run() {
     std::string tapeString = tapes[0].getTapeString();
     if (tapeString[0] == DELIMITER) {
         tapes.erase(tapes.begin(), tapes.end());
-        std::stringstream ss(tapeString);
-        std::string item;
-        while (getline(ss, item, DELIMITER)) {
-            if (item.empty()) {
+        std::stringstream stream(tapeString);
+        std::string tape;
+        while (getline(stream, tape, DELIMITER)) {
+            if (tape.empty()) {
                 continue;
             }
-            tapes.push_back(Tape(item));
+            tapes.push_back(Tape(tape));
         }
         while (currentState != REJECT && currentState != ACCEPT) {
             step();
@@ -85,7 +85,22 @@ void TuringMachine::print() {
     }
 }
 
-void TuringMachine::readFromFile(const std::string& fileName) {
+void TuringMachine::readTapes(const std::string& fileName) {
+    std::ifstream input(fileName, std::ios::in);
+    if (input.is_open()) {
+        std::string line;
+        while(getline(input, line)) {
+            std::string tapeString;
+            std::stringstream stream(line);
+            stream >> tapeString;
+            Tape tape = Tape(tapeString);
+            addTape(tape);
+        }
+    }
+    input.close();
+}
+
+void TuringMachine::readTransitions(const std::string& fileName) {
     std::ifstream input(fileName, std::ios::in);
     if (input.is_open()) {
         std::string line;
@@ -98,12 +113,12 @@ void TuringMachine::readFromFile(const std::string& fileName) {
             std::string currentState, nextState;
             std::string command;
             
-            std::stringstream ss(replaced);
+            std::stringstream stream(replaced);
             
-            ss >> readSymbols >> currentState >> writeSymbols >> nextState >> command;
+            stream >> readSymbols >> currentState >> writeSymbols >> nextState >> command;
             
-            Transition tr = Transition(currentState, readSymbols, writeSymbols, command, nextState);
-            this->addTransition(tr);
+            Transition transition = Transition(currentState, readSymbols, writeSymbols, command, nextState);
+            this->addTransition(transition);
         }
         
         input.close();
@@ -184,25 +199,6 @@ void TuringMachine::compose(TuringMachine& other) {
     }
 }
 
-void TuringMachine::toSingleTape() {
-    if (tapes.size() == 1) {
-        return;
-    }
-    
-    std::stringstream ss("", std::ios_base::app | std::ios_base::out);
-    
-    for (int i = 0; i < tapes.size(); i++) {
-        ss << DELIMITER;
-        ss << tapes[i];
-    }
-    
-    ss << DELIMITER;
-    
-    tapes.erase(tapes.begin(), tapes.end());
-    Tape tape = Tape(ss.str());
-    addTape(tape);
-}
-
 void TuringMachine::branch(TuringMachine& second, TuringMachine& third, Tape& inputTape) {
     third.addTape(inputTape);
     third.run();
@@ -214,4 +210,23 @@ void TuringMachine::branch(TuringMachine& second, TuringMachine& third, Tape& in
         second.addTape(inputTape);
         second.run();
     }
+}
+
+void TuringMachine::toSingleTape() {
+    if (tapes.size() == 1) {
+        return;
+    }
+    
+    std::stringstream stream("", std::ios_base::app | std::ios_base::out);
+    
+    for (int i = 0; i < tapes.size(); i++) {
+        stream << DELIMITER;
+        stream << tapes[i];
+    }
+    
+    stream << DELIMITER;
+    
+    tapes.erase(tapes.begin(), tapes.end());
+    Tape tape = Tape(stream.str());
+    addTape(tape);
 }
