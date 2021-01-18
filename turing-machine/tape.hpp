@@ -22,10 +22,7 @@ private:
     char current;
     std::vector<char> left;
     std::vector<char> right;
-    int size;
-    std::vector<Tape> multitape;
-    void init(const std::string&);
-    
+    int size;    
 public:
     Tape(const std::string&);
     Tape(const Tape&);
@@ -44,6 +41,9 @@ public:
     
     // Get multiple tapes
     std::vector<Tape>& getMultitape();
+    
+    // Get the raw tape string
+    std::string getTapeString() const;
     
     friend std::ostream& operator<<(std::ostream&, Tape&);
 };

@@ -8,21 +8,6 @@
 #include "tape.hpp"
 
 Tape::Tape(const std::string& str) {
-    if (str[0] == DELIMITER) {
-        std::stringstream ss(str);
-        std::string item;
-        while (getline(ss, item, DELIMITER)) {
-            if (item.empty()) {
-                continue;
-            }
-            multitape.push_back(Tape(item));
-        }
-        return;
-    }
-    init(str);
-}
-
-void Tape::init(const std::string& str) {
     for (int i = (int)(str.length() - 1); i >= 0; i--) {
         right.push_back(str[i]);
     }
@@ -63,8 +48,20 @@ void Tape::moveRight() {
     right.pop_back();
 }
 
-std::vector<Tape>& Tape::getMultitape() {
-    return multitape;
+std::string Tape::getTapeString() const {
+    std::string tapeString;
+    for (int i = (int)(left.size() - 1); i >= 0; i--) {
+        int index = abs(i - (int)(left.size() - 1));
+        tapeString += left[index];
+    }
+    
+    tapeString += current;
+    
+    for (int i = (int)(right.size() - 1); i >= 0; i--) {
+        tapeString += right[i];
+    }
+    
+    return tapeString;
 }
 
 std::ostream& operator<<(std::ostream& out, Tape &tape) {

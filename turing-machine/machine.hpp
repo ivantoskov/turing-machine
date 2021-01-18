@@ -20,10 +20,11 @@
 class TuringMachine {
     
 private:
+    Tape* singleTape;
     std::vector<Tape> tapes;
     std::string currentState;
     std::map<std::string, std::vector<Transition>> map;
-    Transition* findTransition(const char&);    
+    Transition* findTransition(const char&);
 public:
     TuringMachine();
     TuringMachine(const TuringMachine&);

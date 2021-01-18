@@ -17,15 +17,7 @@ TuringMachine::TuringMachine(const TuringMachine& other) {
 }
 
 void TuringMachine::addTape(Tape& tape) {
-    
-    if (tape.getMultitape().size() == 0) {
-        tapes.push_back(tape);
-        return;
-    }
-    
-    for (int i = 0; i < tape.getMultitape().size(); i++) {
-        tapes.push_back(tape.getMultitape()[i]);
-    }
+    tapes.push_back(tape);
 }
 
 void TuringMachine::addTransition(Transition& transition) {
@@ -33,7 +25,7 @@ void TuringMachine::addTransition(Transition& transition) {
 }
 
 void TuringMachine::step() {
-    
+
     Transition* next = findTransition(tapes[0].read());
     
     if (next == nullptr) {
@@ -63,6 +55,25 @@ void TuringMachine::step() {
 }
 
 void TuringMachine::run() {
+    
+    std::string tapeString = tapes[0].getTapeString();
+    if (tapeString[0] == DELIMITER) {
+        tapes.erase(tapes.begin(), tapes.end());
+        std::stringstream ss(tapeString);
+        std::string item;
+        while (getline(ss, item, DELIMITER)) {
+            if (item.empty()) {
+                continue;
+            }
+            tapes.push_back(Tape(item));
+        }
+        while (currentState != REJECT && currentState != ACCEPT) {
+            step();
+        }
+        toSingleTape();
+        return;
+    }
+    
     while (currentState != REJECT && currentState != ACCEPT) {
         step();
     }

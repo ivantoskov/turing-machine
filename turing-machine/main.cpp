@@ -38,7 +38,7 @@ void execute() {
 
 int main(int argc, const char * argv[]) {
     
-    execute();
+    //execute();
 
 //    //
 //    // Accepts the language { aⁿbⁿcⁿ | n ≥ 1 }, which is
@@ -54,21 +54,6 @@ int main(int argc, const char * argv[]) {
 //    tm.print();
 //    tm.run();
 //    tm.print();
-//
-//    //
-//    // Accepts the language { 01ⁿ0 | n ≥ 1 }, which is
-//    // n number of ones surrounded by two zeroes
-//    // e.g. "010", "011110", "0111110", ...
-//    //
-//    TuringMachine tm2;
-//    Tape t2 = Tape("0111111110");
-//    tm2.addTape(t2);
-//    tm2.readFromFile("zeroes-and-ones.txt");
-//    tm2.setStartState("q0");
-//
-//    tm2.print();
-//    tm2.run();
-//    tm2.print();
 //
 //
 //    //
@@ -87,24 +72,24 @@ int main(int argc, const char * argv[]) {
 //    tm3.print();
 //    tm3.run();
 //    tm3.print();
-//    //
-//    // Multitape Turing machine
-//    //
-//    TuringMachine tm;
-//    Tape t1 = Tape("#00001#11110#00100#");
-//    Transition tr1 = Transition("q0", "010", "XYZ", "RRR", "q1");
-//    Transition tr2 = Transition("q1", "010", "ZYX", "RRL", "q2");
-//    Transition tr3 = Transition("q2", "01Z", "00X", "SSS", "accept");
-//    tm.addTape(t1);
-//    tm.addTransition(tr1);
-//    tm.addTransition(tr2);
-//    tm.addTransition(tr3);
-//
-//    tm.print();
-//    //tm.toSingleTape();
-//    tm.run();
-//    tm.print();
-//    
+    //
+    // Multitape Turing machine
+    //
+    TuringMachine tm;
+    Tape t1 = Tape("#00001#11110#00100#");
+
+    Transition tr1 = Transition("q0", "010", "XYZ", "RRR", "q1");
+    Transition tr2 = Transition("q1", "010", "ZYX", "RRL", "q2");
+    Transition tr3 = Transition("q2", "01Z", "00X", "SSS", "accept");
+    tm.addTape(t1);
+    tm.addTransition(tr1);
+    tm.addTransition(tr2);
+    tm.addTransition(tr3);
+
+    tm.print();
+    tm.run();
+    tm.print();
+    
 //    //
 //    // Branching Turing machines
 //    //
