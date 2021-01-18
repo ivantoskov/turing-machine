@@ -85,24 +85,20 @@ void TuringMachine::print() {
     }
 }
 
-void TuringMachine::readTapes(const std::string& fileName) {
+void TuringMachine::loadMachine(const std::string& fileName) {
     std::ifstream input(fileName, std::ios::in);
     if (input.is_open()) {
-        std::string line;
-        while(getline(input, line)) {
-            std::string tapeString;
-            std::stringstream stream(line);
-            stream >> tapeString;
-            Tape tape = Tape(tapeString);
+        
+        std::string numberOfTapes;
+        getline(input, numberOfTapes);
+        
+        for (int i = 0; i < std::stoi(numberOfTapes); i++) {
+            std::string tapeStr;
+            getline(input, tapeStr);
+            Tape tape = Tape(tapeStr);
             addTape(tape);
         }
-    }
-    input.close();
-}
-
-void TuringMachine::readTransitions(const std::string& fileName) {
-    std::ifstream input(fileName, std::ios::in);
-    if (input.is_open()) {
+        
         std::string line;
         std::regex expression("[{}(\\->)]");
         

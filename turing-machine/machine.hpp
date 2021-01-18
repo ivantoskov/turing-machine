@@ -43,11 +43,8 @@ public:
     // Print tape(s)
     void print();
     
-    // Read tapes from a text file
-    void readTapes(const std::string&);
-    
-    // Read Turing machine transtions from a text file
-    void readTransitions(const std::string&);
+    // Read Turing machine tape(s) and transtions from a text file
+    void loadMachine(const std::string&);
     
     // Save tape(s) to a text file
     void saveTapes(const std::string);

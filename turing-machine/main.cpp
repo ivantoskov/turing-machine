@@ -9,18 +9,12 @@
 #include "machine.hpp"
 
 void execute() {
-    std::string tapeStr;
-    std::cout << "Enter a tape: ";
-    getline (std::cin, tapeStr);
-    
+
     TuringMachine tm;
-    Tape tape = Tape(tapeStr);
-    tm.addTape(tape);
-    
     std::string fileName;
-    std::cout << "Load transitions from a text file: ";
+    std::cout << "Load machine from a text file: ";
     getline (std::cin, fileName);
-    tm.readTransitions(fileName);
+    tm.loadMachine(fileName);
     tm.setStartState(START_STATE);
     std::cout << "Input tape: " << std::endl;
     tm.print();
@@ -38,17 +32,15 @@ void execute() {
 
 int main(int argc, const char * argv[]) {
     
-    //execute();
+    execute();
 
     
-//     Accepts the language { aⁿbⁿcⁿ | n ≥ 1 }, which is
-//     a's followed by b's then c's of the same length.
-//     e.g. "aabbcc", "aaabbbccc", "aaaabbbbcccc", ...
+    // Accepts the language { aⁿbⁿcⁿ | n ≥ 1 }, which is
+    // a's followed by b's then c's of the same length.
+    // e.g. "aabbcc", "aaabbbccc", "aaaabbbbcccc", ...
     
 //    TuringMachine tm;
-//    tm.readTapes("three-equal-lengths-tapes.txt");
-//    tm.readTransitions("three-equal-lengths.txt");
-//    tm.setStartState(START_STATE);
+//    tm.loadMachine("three-equal-lengths.txt");
 //
 //    tm.print();
 //    tm.run();
@@ -108,5 +100,12 @@ int main(int argc, const char * argv[]) {
 //    std::cout << tm2.isFinishedSuccessfully() << std::endl;
 //    tm2.print();
 //    tm3.print();
+    
+    
+//    TuringMachine tm;
+//    tm.loadMachine("multitape.txt");
+//    tm.print();
+//    tm.run();
+//    tm.print();
     
 }
