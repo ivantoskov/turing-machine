@@ -28,6 +28,7 @@ void execute() {
     tm.run();
     if (tm.isFinishedSuccessfully()) {
         std::cout << "Turing machine successfully reached ACCEPT state." << std::endl;
+        tm.saveTapes("tapes1.txt");
     } else {
         std::cout << "Turing machine reached REJECT state." << std::endl;
     }

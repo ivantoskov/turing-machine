@@ -48,6 +48,11 @@ void Transition::setNextState(const std::string& state) {
 }
 
 std::ostream& operator<<(std::ostream& out, Transition &transition) {
-    out << transition.read << "{" << transition.currentState << "} -> " << transition.write << "{" << transition.nextState << "}" << transition.command << std::endl;
+    out << transition.read
+    << "{" << transition.currentState << "} -> "
+    << transition.write
+    << "{" << transition.nextState << "}"
+    << transition.command
+    << std::endl;
     return out;
 }

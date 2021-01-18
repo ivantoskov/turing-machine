@@ -17,10 +17,12 @@ TuringMachine::TuringMachine(const TuringMachine& other) {
 }
 
 void TuringMachine::addTape(Tape& tape) {
+    
     if (tape.getMultitape().size() == 0) {
         tapes.push_back(tape);
         return;
     }
+    
     for (int i = 0; i < tape.getMultitape().size(); i++) {
         tapes.push_back(tape.getMultitape()[i]);
     }
@@ -77,6 +79,7 @@ void TuringMachine::readFromFile(const std::string& fileName) {
     if (input.is_open()) {
         std::string line;
         std::regex expression("[{}(\\->)]");
+        
         while (getline(input, line)){
             std::string replaced = std::regex_replace(line, expression, " ");
             
@@ -91,7 +94,22 @@ void TuringMachine::readFromFile(const std::string& fileName) {
             Transition tr = Transition(currentState, readSymbols, writeSymbols, command, nextState);
             this->addTransition(tr);
         }
+        
         input.close();
+    }
+}
+
+void TuringMachine::saveTapes(const std::string fileName) {
+    std::ofstream output;
+    output.open(fileName, std::ios_base::app | std::ios_base::out);
+        
+    if (output.is_open()) {
+        for (int i = 0; i < tapes.size(); i++) {
+            output << tapes[i] << std::endl;
+        }
+            
+        output.flush();
+        output.close();
     }
 }
 
@@ -105,20 +123,24 @@ std::vector<Transition>& TuringMachine::getTransitions(const std::string state) 
 
 std::vector<std::string> TuringMachine::getStates() {
     std::vector<std::string> states;
+    
     for(std::map<std::string,std::vector<Transition>>::iterator it = map.begin(); it != map.end(); it++) {
       states.push_back(it->first);
     }
+    
     return states;
 }
 
 Transition* TuringMachine::findTransition(const char& readSymbol) {
     std::vector<Transition>& transitions = map[currentState];
     Transition* found = nullptr;
+    
     for (int i = 0; i < transitions.size(); i++) {
         if (readSymbol == transitions[i].getReadSymbol()[0]) {
             found = &transitions[i];
         }
     }
+    
     return found;
 }
 
@@ -128,18 +150,23 @@ void TuringMachine::setStartState(const std::string& state) {
 
 void TuringMachine::compose(TuringMachine& other) {
     std::vector<std::string> otherStates = other.getStates();
+    
     for (int i = 0; i < this->getStates().size(); i++) {
         std::vector<Transition>& transitions = map[this->getStates()[i]];
+        
         for (int j = 0; j < transitions.size(); j++) {
             Transition& transition = transitions[j];
+            
             if (transition.getNextState() == ACCEPT) {
                 transition.setNextState(other.currentState);
             }
         }
+        
     }
     
     for (int i = 0; i < otherStates.size(); i++) {
         std::vector<Transition>& otherTransitions = other.getTransitions(otherStates[i]);
+        
         for (int j = 0; j < otherTransitions.size(); j++) {
             map[otherStates[i]].push_back(otherTransitions[j]);
         }
@@ -157,6 +184,7 @@ void TuringMachine::toSingleTape() {
         ss << DELIMITER;
         ss << tapes[i];
     }
+    
     ss << DELIMITER;
     
     tapes.erase(tapes.begin(), tapes.end());
@@ -167,6 +195,7 @@ void TuringMachine::toSingleTape() {
 void TuringMachine::branch(TuringMachine& second, TuringMachine& third, Tape& inputTape) {
     third.addTape(inputTape);
     third.run();
+    
     if (third.isFinishedSuccessfully()) {
         this->addTape(inputTape);
         this->run();

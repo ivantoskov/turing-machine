@@ -46,6 +46,9 @@ public:
     // Read Turing machine transtions from a text file
     void readFromFile(const std::string&);
     
+    // Save tape(s) to a textfile
+    void saveTapes(const std::string);
+    
     // Returns true if Turing machine has reached "halt" state
     bool isFinishedSuccessfully();
     
