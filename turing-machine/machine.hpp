@@ -13,6 +13,7 @@
 #include <regex>
 #include <sstream>
 #include <map>
+#include <queue>
 #include "tape.hpp"
 #include "transition.hpp"
 #include "defs.hpp"
@@ -29,10 +30,10 @@ public:
     TuringMachine(const TuringMachine&);
     
     // Add a tape to Turing machine
-    void addTape(Tape&);
+    void addTape(const Tape&);
     
     // Add transition to Turing machine
-    void addTransition(Transition&);
+    void addTransition(const Transition&);
     
     // Execute one step
     void step();
@@ -65,10 +66,9 @@ public:
     void compose(TuringMachine&);
     
     // Branching of two Turing machines concerning a third
-    void branch(TuringMachine&, TuringMachine&, Tape&);
+    void branch(TuringMachine&, TuringMachine&);
     
     // Converts multitape Turing machine to its eqivalent single tape Turing machine
-    // Every multitape Turing machine has an equivalent single tape Turing machine
     void toSingleTape();
     
 };

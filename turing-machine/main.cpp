@@ -15,7 +15,6 @@ void execute() {
     std::cout << "Load machine from a text file: ";
     getline (std::cin, fileName);
     tm.loadMachine(fileName);
-    tm.setStartState(START_STATE);
     std::cout << "Input tape: " << std::endl;
     tm.print();
     std::cout << "Transitions: " << std::endl;
@@ -32,19 +31,19 @@ void execute() {
 
 int main(int argc, const char * argv[]) {
     
-    execute();
+    //execute();
 
     
     // Accepts the language { aⁿbⁿcⁿ | n ≥ 1 }, which is
     // a's followed by b's then c's of the same length.
     // e.g. "aabbcc", "aaabbbccc", "aaaabbbbcccc", ...
     
-//    TuringMachine tm;
-//    tm.loadMachine("three-equal-lengths.txt");
-//
-//    tm.print();
-//    tm.run();
-//    tm.print();
+    TuringMachine tm;
+    tm.loadMachine("three-equal-lengths.txt");
+
+    tm.print();
+    tm.run();
+    tm.print();
 //
 //
 //    //
@@ -68,8 +67,7 @@ int main(int argc, const char * argv[]) {
     //
 //    TuringMachine tm;
 //
-//    tm.readTapes("multitape-tapes.txt");
-//    tm.readTransitions("multitape-transitions.txt");
+//    tm.loadMachine("multitape.txt");
 //
 //    tm.print();
 //    tm.run();
@@ -77,35 +75,21 @@ int main(int argc, const char * argv[]) {
 //    tm.print();
 //    tm.saveTapes("multitape-output.txt");
     
-//    //
-//    // Branching Turing machines
-//    //
-//    TuringMachine tm3;
-//    tm3.readTransitions("ndtm.txt");
+    //
+    // Branching Turing machines
+    //
+    
+//    TuringMachine tm1;
+//    tm1.loadMachine("ndtm.txt");
 //
 //    TuringMachine tm2;
-//    Transition tr1 = Transition("q0", "0", "X", "R", "q1");
-//    Transition tr2 = Transition("q1", "1", "Y", "R", "halt");
-//    tm2.addTransition(tr1);
-//    tm2.addTransition(tr2);
+//    tm2.loadMachine("branch2.txt");
+//    
+//    TuringMachine tm3;
+//    tm3.loadMachine("branch3.txt");
 //
-//    TuringMachine tm1;
-//    Transition tr3 = Transition("q0", "0", "Y", "R", "q1");
-//    Transition tr4 = Transition("q1", "1", "X", "R", "halt");
-//    tm1.addTransition(tr3);
-//    tm1.addTransition(tr4);
-//
-//    Tape tape3 = Tape("0100");
-//    tm1.branch(tm3, tm2, tape3);
+//    tm2.branch(tm3, tm1);
 //    std::cout << tm2.isFinishedSuccessfully() << std::endl;
-//    tm2.print();
+//    tm1.print();
 //    tm3.print();
-    
-    
-//    TuringMachine tm;
-//    tm.loadMachine("multitape.txt");
-//    tm.print();
-//    tm.run();
-//    tm.print();
-    
 }

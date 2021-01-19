@@ -39,9 +39,6 @@ public:
     // Move tape head to the right
     void moveRight();
     
-    // Get multiple tapes
-    std::vector<Tape>& getMultitape();
-    
     // Get the raw tape string
     std::string getTapeString() const;
     

@@ -16,11 +16,11 @@ TuringMachine::TuringMachine(const TuringMachine& other) {
     this->tapes = other.tapes;
 }
 
-void TuringMachine::addTape(Tape& tape) {
+void TuringMachine::addTape(const Tape& tape) {
     tapes.push_back(tape);
 }
 
-void TuringMachine::addTransition(Transition& transition) {
+void TuringMachine::addTransition(const Transition& transition) {
     map[transition.getCurrentState()].push_back(transition);
 }
 
@@ -195,16 +195,20 @@ void TuringMachine::compose(TuringMachine& other) {
     }
 }
 
-void TuringMachine::branch(TuringMachine& second, TuringMachine& third, Tape& inputTape) {
-    third.addTape(inputTape);
-    third.run();
+void TuringMachine::branch(TuringMachine& second, TuringMachine& third) {
     
-    if (third.isFinishedSuccessfully()) {
-        this->addTape(inputTape);
-        this->run();
-    } else {
-        second.addTape(inputTape);
+    std::vector<Tape> tapes = this->tapes;
+    
+    this->run();
+    
+    if (this->isFinishedSuccessfully()) {
+        second.tapes.erase(second.tapes.begin(), second.tapes.end());
+        second.tapes = tapes;
         second.run();
+    } else {
+        third.tapes.erase(third.tapes.begin(), third.tapes.end());
+        third.tapes = tapes;
+        third.run();
     }
 }
 
