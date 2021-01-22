@@ -17,5 +17,6 @@
 #define REJECT "reject"
 #define START_STATE "q0"
 #define DELIMITER '#'
+#define BLANK_SYMBOL 'B'
 
 #endif /* defs_hpp */

@@ -166,6 +166,19 @@ Transition* TuringMachine::findTransition(const char& readSymbol) {
     return found;
 }
 
+std::vector<Transition> TuringMachine::findTransitions(const char& readSymbol) {
+    std::vector<Transition>& transitions = map[currentState];
+    std::vector<Transition> found;
+    
+    for (int i = 0; i < transitions.size(); i++) {
+        if (readSymbol == transitions[i].getReadSymbol()[0]) {
+            found.push_back(transitions[i]);
+        }
+    }
+    
+    return found;
+}
+
 void TuringMachine::setStartState(const std::string& state) {
     currentState = state;
 }

@@ -25,6 +25,7 @@ private:
     std::string currentState;
     std::map<std::string, std::vector<Transition>> map;
     Transition* findTransition(const char&);
+    std::vector<Transition> findTransitions(const char&);
 public:
     TuringMachine();
     TuringMachine(const TuringMachine&);

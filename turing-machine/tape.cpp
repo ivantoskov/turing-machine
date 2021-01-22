@@ -33,7 +33,7 @@ void Tape::write(char symbol) {
 void Tape::moveLeft() {
     right.push_back(current);
     if (left.empty()) {
-        left.push_back(' ');
+        left.push_back(BLANK_SYMBOL);
     }
     current = left.back();
     left.pop_back();
@@ -42,7 +42,7 @@ void Tape::moveLeft() {
 void Tape::moveRight() {
     left.push_back(current);
     if (right.empty()) {
-        right.push_back(' ');
+        right.push_back(BLANK_SYMBOL);
     }
     current = right.back();
     right.pop_back();

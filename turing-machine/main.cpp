@@ -37,28 +37,27 @@ int main(int argc, const char * argv[]) {
     // Accepts the language { aⁿbⁿcⁿ | n ≥ 1 }, which is
     // a's followed by b's then c's of the same length.
     // e.g. "aabbcc", "aaabbbccc", "aaaabbbbcccc", ...
-    
-    TuringMachine tm;
-    tm.loadMachine("three-equal-lengths.txt");
+        
+//    TuringMachine tm;
+//    tm.loadMachine("three-equal-lengths.txt");
 
-    tm.print();
-    tm.run();
-    tm.print();
+//    tm.print();
+//    tm.run();
+//    std::cout << tm.isFinishedSuccessfully() << std::endl;
+//    tm.print();
 //
 //
 //    //
 //    // Composition of two Turing machines
 //    //
 //    TuringMachine tm3;
-//    Tape t3 = Tape("001001");
-//    tm3.addTape(t3);
-//    tm3.readTransitions("tm3.txt");
+//    tm3.loadMachine("tm3.txt");
 //
 //    TuringMachine tm4;
-//    tm4.readTransitions("tm4.txt");
-//
-//    tm3.compose(tm4);
-//
+//    tm4.loadMachine("tm4.txt");
+
+    //tm3.compose(tm4);
+
 //    tm3.print();
 //    tm3.run();
 //    tm3.print();
