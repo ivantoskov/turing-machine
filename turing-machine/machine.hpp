@@ -13,7 +13,6 @@
 #include <regex>
 #include <sstream>
 #include <map>
-#include <queue>
 #include "tape.hpp"
 #include "transition.hpp"
 #include "defs.hpp"
